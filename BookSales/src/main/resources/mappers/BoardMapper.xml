@@ -3,92 +3,105 @@
 <!--  BoardMapper 인터페이스와 SQL 문의 연결 -->
 
 <mapper namespace="com.board.mapper.BoardMapper">
-<!-- 수정해야할부분 -->
+
 	<sql id="boardColumns">
-		  idx
-		, title
-		, content
-		, writer
-		, view_cnt
-		, notice_yn
-		, secret_yn
-		, delete_yn
-		, insert_time
-		, update_time
-		, delete_time
+		  post_number 
+		, board_number 
+		, post_title
+		, post_contents
+		, post_inputdate
+		, post_corrent
+		, post_deletedate
+		, post_recommend
+		, post_views
+		, post_state
+		, user_number 
+	
 	</sql>
 
 	<insert id="insertBoard" parameterType="BoardDTO">
-		INSERT INTO tb_board (
+		INSERT INTO POST_TB (
 			<include refid="boardColumns" />
 		) VALUES (
-			  #{idx}
-			, #{title}
-			, #{content}
-			, #{writer}
-			, 0
-			, IFNULL(#{noticeYn}, 'N')
-			, IFNULL(#{secretYn}, 'N')
-			, 'N'
+			  #{post_number}
+			, #{board_number} 
+			, #{post_title}
+			, #{post_contents}
 			, NOW()
 			, NULL
 			, NULL
+			, 0
+			, 0
+			, IFNULL(#{post_state}, '1')
+		    , #{user_number} 
+			
+	
 		)
 	</insert>
 
+	<!--  게시물작성시 모든 칼럼 대입  -->
+	
 	<select id="selectBoardDetail" parameterType="long" resultType="BoardDTO">
 		SELECT
 			<include refid="boardColumns" />
 		FROM
-			tb_board
+			POST_TB
 		WHERE
-			delete_yn = 'N'
+			post_state = '1'
 		AND
-			idx = #{idx}
+			post_number = #{post_number}
 	</select>
+	<!-- 게시물 선택시 해당 게시물번호 & 게시글 상태 1  -->
 
 	<update id="updateBoard" parameterType="BoardDTO">
-		UPDATE tb_board
+		UPDATE POST_TB
 		SET
-			  update_time = NOW()
-			, title = #{title}
-			, content = #{content}
-			, writer = #{writer}
-			, notice_yn = IFNULL(#{noticeYn}, 'N')
-			, secret_yn = IFNULL(#{secretYn}, 'N')
+			  post_corrent = NOW()  
+			, post_title = #{post_title}  
+			, post_contents = #{post_contents} 
+			, post_deletedate = #{post_deletedate}  
+			, post_recommend = #{post_recommend}
+			, post_views = #{post_views}
+			, post_state = IFNULL(#{post_state}, '1')
 		WHERE
-			idx = #{idx}
+			post_number = #{post_number}
 	</update>
-
+	  <!-- 수정시 수정일 지금날짜로 바꾸고 나머지 동일하게    -->
+	
 	<update id="deleteBoard" parameterType="long">
-		UPDATE tb_board
+		UPDATE POST_TB
 		SET
-			  delete_yn = 'Y'
-			, delete_time = NOW()
+			  post_state = '0'
+			, post_deletedate = NOW()
 		WHERE
-			idx = #{idx}
+			post_number = #{post_number}
 	</update>
+	
+	<!-- 게시물 삭제시 게시물상태 0 변경 & 게시물삭제일 현재시간으로   -->
+
 
 	<select id="selectBoardList" parameterType="BoardDTO" resultType="BoardDTO">
 		SELECT
 			<include refid="boardColumns" />
 		FROM
-			tb_board
+			POST_TB
 		WHERE
-			delete_yn = 'N'
+			post_state = '0'
 		ORDER BY
-			notice_yn ASC,
-			idx DESC,
-			insert_time DESC
+			post_state ASC,
+			post_number DESC,
+			post_inputdate DESC
 	</select>
+	<!-- 리스트 출력시 게시글 상태 1 & 게시글 번호 내림차순 & 게시글 입력일 내림차순  -->
 
 	<select id="selectBoardTotalCount" parameterType="BoardDTO" resultType="int">
 		SELECT
 			COUNT(*)
 		FROM
-			tb_board
+			POST_TB
 		WHERE
-			delete_yn = 'N'
+			post_state = '1'
 	</select>
+	<!--  게시글 상태 1 인 총 게시글 개수  -->
 
 </mapper>
