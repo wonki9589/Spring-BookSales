@@ -1,5 +1,7 @@
 package com.board.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -40,16 +42,28 @@ public class BoardController {
 		try {
 			boolean isRegistered = boardService.registerBoard(params);
 			if (isRegistered == false) {
+				System.out.println("게시글 등록에 실패하였다는 메시지를 전달");
 				// TODO => 게시글 등록에 실패하였다는 메시지를 전달
 			}
 		} catch (DataAccessException e) {
+			System.out.println("데이터베이스 오류");
+			
 			// TODO => 데이터베이스 처리 과정에 문제가 발생하였다는 메시지를 전달
 
 		} catch (Exception e) {
+			System.out.println("ㅔ데이터베이스 오류");
 			// TODO => 시스템에 문제가 발생하였다는 메시지를 전달
 		}
 
 		return "redirect:/board/list.do";
+	}
+	
+	@GetMapping(value = "/board/list.do")
+	public String openBoardList(Model model) {
+		List<BoardDTO> boardList = boardService.getBoardList();
+		model.addAttribute("boardList", boardList);
+	
+		return "board/list";
 	}
 	 
 

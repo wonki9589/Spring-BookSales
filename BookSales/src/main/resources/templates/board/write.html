@@ -8,8 +8,8 @@
 		<div class="card-content">
 			<form class="form-horizontal" th:action="@{/board/register.do}" th:object="${board}" method="post" onsubmit="return registerBoard(this)">
 				<!--/* update의 경우 서버로 전달할 게시글 번호 (PK) */-->
-				<input type="hidden" th:if="*{post_number != null and post_number > 0}" th:field="*{post_number}" />
-
+				<input type="hidden" th:if="*{post_number != null and post_number > '0'}" th:field="*{post_number}" />
+	
 			<!-- 	<div class="form-group">
 					<label for="noticeYn" class="col-sm-2 control-label">공지글 설정</label>
 					<div class="col-sm-10" style="margin-top: 10px;">
@@ -20,10 +20,18 @@
 				<div class="form-group">
 					<label for="post_state" class="col-sm-2 control-label">비밀글 설정</label>
 					<div class="col-sm-10" style="margin-top: 10px;">
-						<input type="checkbox" th:value="*{post_state}" id="post_state" name="post_state" th:checked="*{#strings.equals( post_state, '0' )}" />
+						<input type="checkbox" th:value="*{post_state}" id="post_state" name="post_state" th:checked="*{#strings.equals( post_state, 0 )}" />
 					</div>
 				</div>
 				<!-- secretYn -> post_state 체크버튼 누르면 조건에 만족하면 속성적용   -->
+
+				<div class="form-group">
+					<label for="title" class="col-sm-2 control-label">게시판번호</label>
+					<div class="col-sm-10">
+						<input type="text" th:field="*{board_number}" class="form-control" placeholder="제목을 입력해 주세요." />
+					</div>
+				</div>
+			
 
 				<div class="form-group">
 					<label for="title" class="col-sm-2 control-label">제목</label>
@@ -31,13 +39,16 @@
 						<input type="text" th:field="*{post_title}" class="form-control" placeholder="제목을 입력해 주세요." />
 					</div>
 				</div>
-
+				
+				
 				<div class="form-group">
-					<label for="writer" class="col-sm-2 control-label">이름</label>
+					<label for="title" class="col-sm-2 control-label">이름</label>
 					<div class="col-sm-10">
-						<input type="text" th:field="*{post_inputdate}" class="form-control" placeholder="이름을 입력해 주세요." />
+						<input type="text" th:field="*{user_number}" class="form-control" placeholder="제목을 입력해 주세요." />
 					</div>
 				</div>
+
+				
 
 				<div class="form-group">
 					<label for="content" class="col-sm-2 control-label">내용</label>

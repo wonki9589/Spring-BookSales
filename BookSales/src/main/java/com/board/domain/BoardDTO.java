@@ -11,7 +11,7 @@ public class BoardDTO {
 	
 		//db칼럼명은 대문자 java 소문자로 
 	
-	private int post_number;    
+	private Long post_number;    
 	//POST_NUMBER 게시번호 
 	
 	private int board_number; 

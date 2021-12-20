@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="board/layout/basic">
+	<th:block layout:fragment="title">
+		<title>This page is a list page</title>
+	</th:block>
+
+	<th:block layout:fragment="search">
+		<form action="#" id="searchform-header" class="searchform js__toggle active pull-right">
+			<input type="search" placeholder="Search..." class="input-search">
+			<button class="mdi mdi-magnify button-search" type="submit">
+				<i class="fa fa-search" aria-hidden="true"></i>
+			</button>
+		</form>
+	</th:block>
+	<!-- 특정게시물을 검색할 수 있는 영역 아직 안만듦 -->
+
+	<th:block layout:fragment="content">
+		<div class="table-responsive clearfix">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성자</th>		
+						<th>등록일</th>
+						<th>조회 수</th>
+						<th>게시물 상태</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${not #lists.isEmpty( boardList )}" th:each="row:${boardList}">
+						<td scope="row" th:text="${row?.post_number}"></td>
+						<!-- 번호 -->
+						<td class="text-left">
+							<a th:href="@{/board/view.do(post_number=${row?.post_number} )}" th:text="${row?.post_title}"></a>
+						</td>
+						<!-- 제목 -->
+						<!-- 타임리프 GET 파라미터 추가 방식 -▶ /board/view.do( idx=${idx}, page=${page} ) -->
+						<td th:text="${row?.user_number}"></td>
+						<!-- 작성자 -->
+						<td th:text="${#temporals.format( row?.post_inputdate, 'yyyy-MM-dd' )}"></td>
+						<!--등록일 -->
+						<td th:text="${row?.post_views}"></td>
+						<!-- 조회 수 -->
+						<td th:text="${row?.post_state}"></td>
+					</tr>
+					<tr th:unless="${not #lists.isEmpty( boardList )}">
+						<td colspan="5">조회된 결과가 없습니다.</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="btn_wrap text-right">
+				<a th:href="@{/board/write.do}" class="btn btn-primary waves-effect waves-light">Write</a>
+			</div>
+
+			<th:block layout:fragment="paging">
+				<nav aria-label="Page navigation" class="text-center">
+					<ul class="pagination">
+						<li>
+							<a href="#" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+						<li><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li>
+							<a href="#" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</th:block>
+			
+			<!-- 아래의 이미지는 리스트에서 특정 페이지로 이동할 수 있는 페이징 영역입니다.
+				 영역과 마찬가지로 CRUD 기능 구현이 모두 마무리되면 진행할 예정입니다.
+					지금은 번호를 클릭해도 작동하지 않는 것이 정상입니다.  -->
+		</div>
+	</th:block>
+</html>

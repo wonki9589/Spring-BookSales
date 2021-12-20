@@ -82,11 +82,17 @@
 
 	<select id="selectBoardList" parameterType="BoardDTO" resultType="BoardDTO">
 		SELECT
-			<include refid="boardColumns" />
+			<!-- <include refid="boardColumns" /> -->
+		  post_number 
+		, post_title
+		, post_inputdate
+		, post_views
+		, user_number
+		,post_state 
 		FROM
 			POST_TB
 		WHERE
-			post_state = '0'
+			post_state = '1'
 		ORDER BY
 			post_state ASC,
 			post_number DESC,

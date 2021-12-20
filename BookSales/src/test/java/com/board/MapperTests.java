@@ -1,14 +1,17 @@
 package com.board;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 
 import com.board.domain.BoardDTO;
 import com.board.mapper.BoardMapper;
+import com.board.service.BoardService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -18,21 +21,22 @@ class MapperTests {
 
 	@Autowired
 	private BoardMapper boardMapper;
+	private BoardService boardService;
 
 	@Test
 	public void testOfInsert() {
 		BoardDTO params = new BoardDTO();
-		params.setPost_number(2);
-		params.setBoard_number(2);
-		params.setPost_title("1번 게시글 제목");
-		params.setPost_contents("1번 게시글 내용");
+	
+		params.setBoard_number(3);
+		params.setPost_title("3번 게시글 제목");
+		params.setPost_contents("3번 게시글 내용");
 		params.setPost_inputdate(null);
 		params.setPost_corrent(null);
 		params.setPost_deletedate(null);
-		params.setPost_recommend(0);
+		params.setPost_recommend(1);
 		params.setPost_views(0);
 		params.setPost_state("1");
-		params.setUser_number(2);
+		params.setUser_number(3);
 	
 //   보드넘버랑 유저넘버가 다른테이블에서 참조하는거니까 해당 테이블에 데이터가 있어야 찾아서 넣을수있음 
 		//게시글번호에 auto increment 추가안해서 직접 넣어줘야함 이거는 상의하고 변경하던가 해야함 
@@ -93,7 +97,7 @@ public void testOfSelectDetail() {
 		BoardDTO params = new BoardDTO();
 		params.setPost_title("2번 게시글 제목을 수정합니다.");
 		params.setPost_contents("2번 게시글 내용을 수정합니다.");
-		params.setPost_number(2);
+		params.setPost_number((long) 2);
 
 		int result = boardMapper.updateBoard(params);
 		if (result == 1) {
@@ -133,6 +137,7 @@ public void testOfSelectDetail() {
 	}
 	
 	
+	
 	@Test
 	public void testSelectList() {
 		int boardTotalCount = boardMapper.selectBoardTotalCount();
@@ -152,6 +157,33 @@ public void testOfSelectDetail() {
 	}
 
 	
+	
+	@Test
+	public void getBoardList2021() {
+		List<BoardDTO> boardList = Collections.emptyList();
+		// 비어있는 리스트 생성 
+
+		int boardTotalCount = boardMapper.selectBoardTotalCount();
+		System.out.println("total count : " +boardTotalCount);
+		
+		if (boardTotalCount > 0) {
+			boardList = boardMapper.selectBoardList();
+			
+			if(boardList.isEmpty()) {
+				System.out.println("리스트가 비어있다");
+			}
+			System.out.println( "리스트가 있네 ");
+			System.out.println(boardList);
+		}
+		
+	}
+	@Test
+	public void openBoardList() {
+		List<BoardDTO> boardList = boardService.getBoardList();
+		
+		System.out.println(boardList);
+		
+	}
 	
 
 }
