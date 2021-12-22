@@ -19,7 +19,7 @@ public class BoardServiceImpl implements BoardService {
 	public boolean registerBoard(BoardDTO params) {
 		int queryResult = 0;
 
-	if (params.getPost_number() == null) {
+	if (params.getPostNumber() == null) {
 //			params.getPost_number() == null  int 형이라 0으로 바꿈 
 			queryResult = boardMapper.insertBoard(params);
 			System.out.println(queryResult);
@@ -35,19 +35,19 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public BoardDTO getBoardDetail(long post_number) {
-		return boardMapper.selectBoardDetail(post_number);
+	public BoardDTO getBoardDetail(long postNumber) {
+		return boardMapper.selectBoardDetail(postNumber);
 	}
 	// 하나의 게시을 조회하는 결과값 반환 추후에 조회수 증기사키는 로직 필요 
 
 	@Override
-	public boolean deleteBoard(long post_number) {
+	public boolean deleteBoard(long postNumber) {
 		int queryResult = 0;
 
-		BoardDTO board = boardMapper.selectBoardDetail(post_number);
+		BoardDTO board = boardMapper.selectBoardDetail(postNumber);
 
-		if (board != null && "0".equals(board.getPost_state())) {
-			queryResult = boardMapper.deleteBoard(post_number);
+		if (board != null && "0".equals(board.getPostState())) {
+			queryResult = boardMapper.deleteBoard(postNumber);
 		}
 //없는 게시글이거나, 삭제 여부(delete_yn) 컬럼의 상태 값이 '0'인 경우에는 삭제가 실행 x
 		return (queryResult == 1) ? true : false;
@@ -56,6 +56,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardDTO> getBoardList() {
 		List<BoardDTO> boardList = Collections.emptyList();
+		
 		// 비어있는 리스트 생성 
 
 		int boardTotalCount = boardMapper.selectBoardTotalCount();

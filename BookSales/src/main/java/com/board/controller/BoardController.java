@@ -20,11 +20,11 @@ public class BoardController {
 	private BoardService boardService;
 
 	@GetMapping(value = "/board/write.do")
-	public String openBoardWrite(@RequestParam(value = "post_number", required = false) Long post_number, Model model) {
-		if (post_number == null) {
+	public String openBoardWrite(@RequestParam(value = "postNumber", required = false) Long postNumber, Model model) {
+		if (postNumber == null) {
 			model.addAttribute("board", new BoardDTO());
 		} else {
-			BoardDTO board = boardService.getBoardDetail(post_number);
+			BoardDTO board = boardService.getBoardDetail(postNumber);
 			if (board == null) {
 				return "redirect:/board/list.do";
 			}
@@ -64,6 +64,23 @@ public class BoardController {
 		model.addAttribute("boardList", boardList);
 	
 		return "board/list";
+	}
+	
+	@GetMapping(value = "/board/view.do")
+	public String openBoardDetail(@RequestParam(value = "postNumber", required = false) Long postNumber, Model model) {
+		if (postNumber == null) {
+			// TODO => 올바르지 않은 접근이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
+			return "redirect:/board/list.do";
+		}
+
+		BoardDTO board = boardService.getBoardDetail(postNumber);
+		if (board == null || "0".equals(board.getPostCorrent())) {
+			// TODO => 없는 게시글이거나, 이미 삭제된 게시글이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
+			return "redirect:/board/list.do";
+		}
+		model.addAttribute("board", board);
+
+		return "board/view";
 	}
 	 
 

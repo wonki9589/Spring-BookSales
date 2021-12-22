@@ -27,16 +27,16 @@ class MapperTests {
 	public void testOfInsert() {
 		BoardDTO params = new BoardDTO();
 	
-		params.setBoard_number(3);
-		params.setPost_title("3번 게시글 제목");
-		params.setPost_contents("3번 게시글 내용");
-		params.setPost_inputdate(null);
-		params.setPost_corrent(null);
-		params.setPost_deletedate(null);
-		params.setPost_recommend(1);
-		params.setPost_views(0);
-		params.setPost_state("1");
-		params.setUser_number(3);
+		params.setBoardNumber(3);
+		params.setPostTitle("3번 게시글 제목");
+		params.setPostContents("3번 게시글 내용");
+		params.setPostInputdate(null);
+		params.setPostCorrent(null);
+		params.setPostDeletedate(null);
+		params.setPostRecommend(1);
+		params.setPostViews(0);
+		params.setPostState("1");
+		params.setUserNumber(3);
 	
 //   보드넘버랑 유저넘버가 다른테이블에서 참조하는거니까 해당 테이블에 데이터가 있어야 찾아서 넣을수있음 
 		//게시글번호에 auto increment 추가안해서 직접 넣어줘야함 이거는 상의하고 변경하던가 해야함 
@@ -51,16 +51,16 @@ class MapperTests {
 			BoardDTO params = new BoardDTO();
 			//			params.setPost_number();
 			// auto increment 속성 추가로 굳이 안넣어줘도됨 
-			params.setBoard_number(1);
+			params.setBoardNumber(1);
 			// 외래키니까 무조건 넣어줘야함 
-			params.setPost_title(i+ "번 게시글 제목");
-			params.setPost_contents(i +"번 게시글 제목");
-			params.setPost_corrent(null);
-			params.setPost_deletedate(null);
-			params.setPost_recommend(0);
-			params.setPost_views(0);
-			params.setPost_state("1");
-			params.setUser_number(i);
+			params.setPostTitle(i+ "번 게시글 제목");
+			params.setPostContents(i +"번 게시글 제목");
+			params.setPostCorrent(null);
+			params.setPostDeletedate(null);
+			params.setPostRecommend(0);
+			params.setPostViews(0);
+			params.setPostState("1");
+			params.setUserNumber(i);
 			
 			
 			boardMapper.insertBoard(params);
@@ -95,9 +95,9 @@ public void testOfSelectDetail() {
 	@Test
 	public void testOfUpdate() {
 		BoardDTO params = new BoardDTO();
-		params.setPost_title("2번 게시글 제목을 수정합니다.");
-		params.setPost_contents("2번 게시글 내용을 수정합니다.");
-		params.setPost_number((long) 2);
+		params.setPostTitle("2번 게시글 제목을 수정합니다.");
+		params.setPostContents("2번 게시글 내용을 수정합니다.");
+		params.setPostNumber((long) 2);
 
 		int result = boardMapper.updateBoard(params);
 		if (result == 1) {
@@ -147,9 +147,9 @@ public void testOfSelectDetail() {
 				for (BoardDTO board : boardList) {
 					System.out.println("=========================");
 					System.out.println(board);
-					System.out.println(board.getPost_title());
-					System.out.println(board.getPost_contents());
-					System.out.println(board.getPost_number());
+					System.out.println(board.getPostTitle());
+					System.out.println(board.getPostContents());
+					System.out.println(board.getPostNumber());
 					System.out.println("=========================");
 				}
 			}
@@ -160,23 +160,32 @@ public void testOfSelectDetail() {
 	
 	@Test
 	public void getBoardList2021() {
+		Long boardNum;
 		List<BoardDTO> boardList = Collections.emptyList();
+		System.out.println("--------------------------------");
+		System.out.println(boardList);
+		System.out.println("--------------------------------");
 		// 비어있는 리스트 생성 
 
 		int boardTotalCount = boardMapper.selectBoardTotalCount();
 		System.out.println("total count : " +boardTotalCount);
+		System.out.println("--------------------------------");
 		
-		if (boardTotalCount > 0) {
+		
 			boardList = boardMapper.selectBoardList();
-			
-			if(boardList.isEmpty()) {
-				System.out.println("리스트가 비어있다");
+//			selectBoardList 쿼리 실행시 널값으로 출력됨 
+			for(int i=0; i<boardList.size(); i++) {
+				boardNum = boardList.get(i).getPostNumber();
+				System.out.println(boardNum);
 			}
-			System.out.println( "리스트가 있네 ");
-			System.out.println(boardList);
+			
 		}
+	
+	
+	
+	
 		
-	}
+	
 	@Test
 	public void openBoardList() {
 		List<BoardDTO> boardList = boardService.getBoardList();

@@ -29,20 +29,21 @@
 				</thead>
 				<tbody>
 					<tr th:if="${not #lists.isEmpty( boardList )}" th:each="row:${boardList}">
-						<td scope="row" th:text="${row?.post_number}"></td>
+						<td scope="row" th:text="${row?.postNumber}"></td>
 						<!-- 번호 -->
 						<td class="text-left">
-							<a th:href="@{/board/view.do(post_number=${row?.post_number} )}" th:text="${row?.post_title}"></a>
+							<a th:href="@{/board/view.do(postNumber=${row?.postNumber} )}" th:text="${row?.postTitle}"></a>
 						</td>
 						<!-- 제목 -->
 						<!-- 타임리프 GET 파라미터 추가 방식 -▶ /board/view.do( idx=${idx}, page=${page} ) -->
-						<td th:text="${row?.user_number}"></td>
+						<td th:text="${row?.userNumber}"></td>
 						<!-- 작성자 -->
-						<td th:text="${#temporals.format( row?.post_inputdate, 'yyyy-MM-dd' )}"></td>
+						<!-- <td th:text="${#temporals.format( row?.postInputdate, 'yyyy-MM-dd' )}"></td> -->
+						<td th:text="${row?.postInputdate}"></td>
 						<!--등록일 -->
-						<td th:text="${row?.post_views}"></td>
+						<td th:text="${row?.postViews}"></td>
 						<!-- 조회 수 -->
-						<td th:text="${row?.post_state}"></td>
+						<td th:text="${row?.postState}"></td>
 					</tr>
 					<tr th:unless="${not #lists.isEmpty( boardList )}">
 						<td colspan="5">조회된 결과가 없습니다.</td>

@@ -11,37 +11,37 @@ public class BoardDTO {
 	
 		//db칼럼명은 대문자 java 소문자로 
 	
-	private Long post_number;    
+	private Long postNumber;    
 	//POST_NUMBER 게시번호 
 	
-	private int board_number; 
+	private int boardNumber; 
 	// 게시글 테이블 만들어지면 연결해야함 지금은 강제로 1이라고 저장해놓음 
 	//BOARD_NUMBER 게시판번호 
 	
-	private String post_title; 
+	private String postTitle; 
 	//POST_TITLE 제목 
 	
-	private String post_contents; 
+	private String postContents; 
 	//POST_CONTENTS 내용 
 	
-	private String post_inputdate;
+	private String postInputdate;
 	//POST_INPUTDATE 등록일 
 	
-	private String post_corrent; 
+	private String postCorrent; 
 	//POST_CORRENT 수정일 
 	
-	private String post_deletedate ;
+	private String postDeletedate ;
 	//POST_DELETEDATE 삭제일 
 	
-	private int post_recommend;
+	private int postRecommend;
 	//POST_RECOMMEND 추천수 
-	private int post_views;
+	private int postViews;
 	//POST_VIEWS 조회수 
 	
-	private String post_state;
+	private String postState;
 	//POST_STATE  게시글 상태 
 	
-	private int  user_number;
+	private int  userNumber;
 	// 사용자 테이블 만들어지면 연결해야함 지금은 쿼리넣을때 1 이라고 강제로 저장해놓음 
 	//USER_NUMBER  게시글 작성자 
  }

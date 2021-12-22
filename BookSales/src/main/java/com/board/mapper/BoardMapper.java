@@ -11,13 +11,13 @@ public interface BoardMapper {
 
 	public int insertBoard(BoardDTO params);
 
-	public BoardDTO selectBoardDetail(Long post_number);
+	public BoardDTO selectBoardDetail(Long postNumber);
 
 	public int updateBoard(BoardDTO params);
 
-	public int deleteBoard(Long post_number);
+	public int deleteBoard(Long postNumber);
 
-	public List<BoardDTO> selectBoardList();
+	public List<BoardDTO> selectBoardList() ;
 
 	public int selectBoardTotalCount();
 

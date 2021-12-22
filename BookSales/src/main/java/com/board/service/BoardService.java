@@ -8,9 +8,9 @@ public interface BoardService {
 
 	public boolean registerBoard(BoardDTO params);
 
-	public BoardDTO getBoardDetail(long post_number);
+	public BoardDTO getBoardDetail(long postNumber);
 
-	public boolean deleteBoard(long post_number);
+	public boolean deleteBoard(long postNumber);
 
 	public List<BoardDTO> getBoardList();
 

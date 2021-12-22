@@ -59,10 +59,12 @@
 			  post_corrent = NOW()  
 			, post_title = #{post_title}  
 			, post_contents = #{post_contents} 
-			, post_deletedate = #{post_deletedate}  
+			, post_inputdate = #{post_inputdate}
+			, post_deletedate = Null
 			, post_recommend = #{post_recommend}
 			, post_views = #{post_views}
 			, post_state = IFNULL(#{post_state}, '1')
+			, user_number = #{user_number}
 		WHERE
 			post_number = #{post_number}
 	</update>
@@ -81,22 +83,25 @@
 
 
 	<select id="selectBoardList" parameterType="BoardDTO" resultType="BoardDTO">
+	<![CDATA[
 		SELECT
-			<!-- <include refid="boardColumns" /> -->
-		  post_number 
-		, post_title
-		, post_inputdate
-		, post_views
-		, user_number
-		,post_state 
+		
+			
+		  post_number as postNumber
+		, post_title as postTitle
+		, post_inputdate as postInputdate
+		, post_views as postViews
+		, user_number as userNumber
+		,post_state as postState
 		FROM
 			POST_TB
 		WHERE
 			post_state = '1'
 		ORDER BY
-			post_state ASC,
+			post_state ASC, 
 			post_number DESC,
 			post_inputdate DESC
+		]]>
 	</select>
 	<!-- 리스트 출력시 게시글 상태 1 & 게시글 번호 내림차순 & 게시글 입력일 내림차순  -->
 
