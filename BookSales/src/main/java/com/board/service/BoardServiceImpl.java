@@ -20,9 +20,9 @@ public class BoardServiceImpl implements BoardService {
 		int queryResult = 0;
 
 	if (params.getPostNumber() == null) {
-//			params.getPost_number() == null  int 형이라 0으로 바꿈 
+
 			queryResult = boardMapper.insertBoard(params);
-			System.out.println(queryResult);
+
 		} 
 	else {
 			queryResult = boardMapper.updateBoard(params);
@@ -46,7 +46,7 @@ public class BoardServiceImpl implements BoardService {
 
 		BoardDTO board = boardMapper.selectBoardDetail(postNumber);
 
-		if (board != null && "0".equals(board.getPostState())) {
+		if (board != null && "1".equals(board.getPostState())) {
 			queryResult = boardMapper.deleteBoard(postNumber);
 		}
 //없는 게시글이거나, 삭제 여부(delete_yn) 컬럼의 상태 값이 '0'인 경우에는 삭제가 실행 x

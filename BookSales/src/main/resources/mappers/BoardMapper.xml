@@ -5,38 +5,44 @@
 <mapper namespace="com.board.mapper.BoardMapper">
 
 	<sql id="boardColumns">
+
 		  post_number 
 		, board_number 
-		, post_title
-		, post_contents
+		, post_title 
+		, post_contents 
 		, post_inputdate
 		, post_corrent
-		, post_deletedate
-		, post_recommend
-		, post_views
+		, post_deletedate 
+		, post_recommend 
+		, post_views 
 		, post_state
-		, user_number 
+		, user_number
+	<!--  여기는 db 칼럼명과 일치시킴-->
 	
 	</sql>
 
 	<insert id="insertBoard" parameterType="BoardDTO">
+
 		INSERT INTO POST_TB (
 			<include refid="boardColumns" />
 		) VALUES (
-			  #{post_number}
-			, #{board_number} 
-			, #{post_title}
-			, #{post_contents}
+			  #{postNumber }
+			, #{boardNumber } 
+			, #{postTitle}
+			, #{postContents}
 			, NOW()
 			, NULL
 			, NULL
 			, 0
 			, 0
-			, IFNULL(#{post_state}, '1')
-		    , #{user_number} 
+			, IFNULL(#{postState}, '1')
+		    , #{userNumber} 
 			
-	
+	<!--  데이터베이스 칼럼명그대로 boardColumns에 스네이크케이스   -->
+	<!-- 입력할 데이터들은 dao 에서 선언한 카멜케이스 불렀음  -->
+	<!-- 둘이 같지않아도 되나보네-->
 		)
+		
 	</insert>
 
 	<!--  게시물작성시 모든 칼럼 대입  -->
@@ -49,24 +55,25 @@
 		WHERE
 			post_state = '1'
 		AND
-			post_number = #{post_number}
+			post_number = #{postNumber}
 	</select>
 	<!-- 게시물 선택시 해당 게시물번호 & 게시글 상태 1  -->
 
 	<update id="updateBoard" parameterType="BoardDTO">
 		UPDATE POST_TB
 		SET
-			  post_corrent = NOW()  
-			, post_title = #{post_title}  
-			, post_contents = #{post_contents} 
-			, post_inputdate = #{post_inputdate}
-			, post_deletedate = Null
-			, post_recommend = #{post_recommend}
-			, post_views = #{post_views}
-			, post_state = IFNULL(#{post_state}, '1')
-			, user_number = #{user_number}
+			  post_number = #{postNumber}
+		    , board_number = #{boardNumber}
+			, post_title = #{postTitle}  
+			, post_contents = #{postContents} 
+			, post_corrent = NOW()  
+			, post_recommend = #{postRecommend}
+			, post_views = #{postViews}
+			, post_state = IFNULL(#{postState}, '1')
+			, user_number = 1
+			
 		WHERE
-			post_number = #{post_number}
+			post_number = #{postNumber}
 	</update>
 	  <!-- 수정시 수정일 지금날짜로 바꾸고 나머지 동일하게    -->
 	
@@ -76,7 +83,7 @@
 			  post_state = '0'
 			, post_deletedate = NOW()
 		WHERE
-			post_number = #{post_number}
+			post_number = #{postNumber}
 	</update>
 	
 	<!-- 게시물 삭제시 게시물상태 0 변경 & 게시물삭제일 현재시간으로   -->

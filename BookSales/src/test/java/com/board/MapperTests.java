@@ -27,16 +27,15 @@ class MapperTests {
 	public void testOfInsert() {
 		BoardDTO params = new BoardDTO();
 	
-		params.setBoardNumber(3);
-		params.setPostTitle("3번 게시글 제목");
-		params.setPostContents("3번 게시글 내용");
+		params.setBoardNumber(2);
+		params.setPostTitle("1번 게시글 제목");
+		params.setPostContents("1번 게시글 내용");
 		params.setPostInputdate(null);
 		params.setPostCorrent(null);
-		params.setPostDeletedate(null);
 		params.setPostRecommend(1);
 		params.setPostViews(0);
 		params.setPostState("1");
-		params.setUserNumber(3);
+		params.setUserNumber(1);
 	
 //   보드넘버랑 유저넘버가 다른테이블에서 참조하는거니까 해당 테이블에 데이터가 있어야 찾아서 넣을수있음 
 		//게시글번호에 auto increment 추가안해서 직접 넣어줘야함 이거는 상의하고 변경하던가 해야함 
@@ -51,7 +50,7 @@ class MapperTests {
 			BoardDTO params = new BoardDTO();
 			//			params.setPost_number();
 			// auto increment 속성 추가로 굳이 안넣어줘도됨 
-			params.setBoardNumber(1);
+			params.setBoardNumber(2);
 			// 외래키니까 무조건 넣어줘야함 
 			params.setPostTitle(i+ "번 게시글 제목");
 			params.setPostContents(i +"번 게시글 제목");
@@ -60,7 +59,7 @@ class MapperTests {
 			params.setPostRecommend(0);
 			params.setPostViews(0);
 			params.setPostState("1");
-			params.setUserNumber(i);
+			params.setUserNumber(1);
 			
 			
 			boardMapper.insertBoard(params);
@@ -95,13 +94,18 @@ public void testOfSelectDetail() {
 	@Test
 	public void testOfUpdate() {
 		BoardDTO params = new BoardDTO();
-		params.setPostTitle("2번 게시글 제목을 수정합니다.");
-		params.setPostContents("2번 게시글 내용을 수정합니다.");
-		params.setPostNumber((long) 2);
+		params.setPostTitle("수정테스트 .");
+		params.setPostContents(" 게시글 수정테스트중이요.");
+		params.setPostInputdate("2020-01-11");
+		params.setPostRecommend(2);
+		params.setPostViews(2);
+		params.setUserNumber(1);
+	
+		params.setPostNumber((long) 21);
 
 		int result = boardMapper.updateBoard(params);
 		if (result == 1) {
-			BoardDTO board = boardMapper.selectBoardDetail((long) 2);
+			BoardDTO board = boardMapper.selectBoardDetail((long) 21);
 			try {
 				String boardJson = new ObjectMapper().writeValueAsString(board);
 
@@ -120,9 +124,9 @@ public void testOfSelectDetail() {
 
 	@Test
 	public void testOfDelete() {
-		int result = boardMapper.deleteBoard((long) 2);
+		int result = boardMapper.deleteBoard((long) 19);
 		if (result == 1) {
-			BoardDTO board = boardMapper.selectBoardDetail((long) 2);
+			BoardDTO board = boardMapper.selectBoardDetail((long) 20);
 			try {
 				String boardJson = new ObjectMapper().writeValueAsString(board);
 

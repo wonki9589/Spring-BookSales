@@ -39,14 +39,15 @@ public class BoardController {
 	
 	@PostMapping(value = "/board/register.do")
 	public String registerBoard(final BoardDTO params) {
+		boolean isRegistered = boardService.registerBoard(params);
 		try {
-			boolean isRegistered = boardService.registerBoard(params);
 			if (isRegistered == false) {
 				System.out.println("게시글 등록에 실패하였다는 메시지를 전달");
 				// TODO => 게시글 등록에 실패하였다는 메시지를 전달
 			}
 		} catch (DataAccessException e) {
 			System.out.println("데이터베이스 오류");
+			System.out.println(isRegistered);
 			
 			// TODO => 데이터베이스 처리 과정에 문제가 발생하였다는 메시지를 전달
 
@@ -81,6 +82,32 @@ public class BoardController {
 		model.addAttribute("board", board);
 
 		return "board/view";
+	}
+	
+	
+	@PostMapping(value = "/board/delete.do")
+	public String deleteBoard(@RequestParam(value = "postNumber", required = false) Long postNumber) {
+		if (postNumber == null) {
+			// TODO => 올바르지 않은 접근이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
+			return "redirect:/board/list.do";
+		}
+
+		try {
+			boolean isDeleted = boardService.deleteBoard(postNumber);
+			if (isDeleted == false) {
+				System.out.println(isDeleted);
+				// TODO => 게시글 삭제에 실패하였다는 메시지를 전달
+			}
+		} catch (DataAccessException e) {
+			System.out.println("delete 데이터베이스 오류");
+			// TODO => 데이터베이스 처리 과정에 문제가 발생하였다는 메시지를 전달
+
+		} catch (Exception e) {
+			System.out.println("delete 데이터베이스 오류2");
+			// TODO => 시스템에 문제가 발생하였다는 메시지를 전달
+		}
+
+		return "redirect:/board/list.do";
 	}
 	 
 
