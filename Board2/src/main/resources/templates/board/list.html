@@ -60,24 +60,46 @@
 
 
 			<th:block layout:fragment="paging">
-				<nav style="display: inline-block;" aria-label="Page navigation"
-					class="text-center">
-					<ul class="pagination">
-						<li><a href="#" aria-label="Previous"> <span
-								aria-hidden="true">&laquo;</span>
-						</a></li>
-						<li><a style="padding-right: 5px;" href="#">1</a></li>
-						<li><a style="padding-right: 5px;" href="#">2</a></li>
-						<li><a style="padding-right: 5px;" href="#">3</a></li>
-						<li><a style="padding-right: 5px;" href="#">4</a></li>
-						<li><a style="padding-right: 5px;" href="#">5</a></li>
-						<li><a style="padding-right: 5px;" href="#" aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-						</a></li>
-					</ul>
-				</nav>
-			</th:block>
-		</div>
-	</div>
+                <nav th:replace="board/fragments/common :: pagination"></nav>
+            </th:block>
+        </div>
+    </div>
+
+
 </th:block>
+    
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+
+            function movePage(uri, queryString) {
+                location.href = uri + queryString;
+            }
+            
+            function searchBoard(form) {
+                /*[- 드롭다운이 아닌 메인 검색 키워드로 검색했을 때 -]*/
+                if (isEmpty(form) == true) {
+                    var searchKeyword = document.getElementById("mainSearchKeyword");
+                    if (isEmpty(searchKeyword.value) == true) {
+                        alert("키워드를 입력해 주세요.");
+                        searchKeyword.focus();
+                        return false;
+                    }
+
+                    form = document.getElementById("searchForm");
+                    form.searchKeyword.value = searchKeyword.value;
+                    form.submit();
+                }
+
+                if (isEmpty(form.searchKeyword.value) == true) {
+                    alert("키워드를 입력해 주세요.");
+                    form.searchKeyword.focus();
+                    return false;
+                }
+            }
+            /*[- end of function -]*/
+
+            /*]]>*/
+        </script>
+    </th:block>
 </html>
