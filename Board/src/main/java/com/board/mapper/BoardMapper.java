@@ -21,5 +21,5 @@ public interface BoardMapper {
     public List<BoardDTO> selectBoardList(BoardDTO params);
 
     public int selectBoardTotalCount(BoardDTO params);
-
+   
 }

@@ -17,10 +17,13 @@
 
     </sql>
 
+
+ 
+
     <insert id="insertBoard" parameterType="BoardDTO">
         INSERT INTO POST_TB (
             <include refid="boardColumns" />
-        ) VALUES (
+        ) select (
                #{postNumber }
             , 2
             , #{postTitle}
@@ -35,6 +38,24 @@
         )
     </insert>
 
+<!-- <select id="findAllEmpDeptList" resultType="map">
+  SELECT e.empno, e.ename, d.deptno, d.dname, d.loc
+  FROM   spring_department d 
+  LEFT OUTER JOIN spring_employment e ON d.deptno = e.deptno
+</select> -->
+
+	<select id="selectUserName" parameterType="long" resultType="BoardDTO">
+        SELECT
+          user.user_name 
+        FROM
+           POST_TB post
+       	JOIN 
+            USER_TB user
+        ON
+            post.USER_NAME = user.USER_NAME
+    </select>
+<!-- <select  aa.USER_NAME from POST_TB as post join USER_TB as aa 
+on post.USER_NUMBER = aa.USER_NUMBER ; -->
     <select id="selectBoardDetail" parameterType="long" resultType="BoardDTO">
         SELECT
             <include refid="boardColumns" />
@@ -43,7 +64,7 @@
         WHERE
             post_state = '1'
         AND
-            postNumber = #{postNumber}
+            post_number = #{postNumber}
     </select>
 
     <update id="updateBoard" parameterType="BoardDTO">
@@ -71,6 +92,9 @@
             post_number = #{postNumber}
 
     </update>
+
+
+
 
         <select id="selectBoardList" parameterType="BoardDTO" resultType="BoardDTO">
         SELECT

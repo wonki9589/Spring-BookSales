@@ -39,6 +39,7 @@ public class BoardDTO extends CommonDTO{
         private int  userNumber;
         // 사용자 테이블 만들어지면 연결해야함 지금은 쿼리넣을때 1 이라고 강제로 저장해놓음 
         //USER_NUMBER  게시글 작성자 
+        private String userName;
      }
 
  

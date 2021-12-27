@@ -44,7 +44,7 @@ public class BoardServiceImpl implements BoardService {
 
         BoardDTO board = boardMapper.selectBoardDetail(postNumber);
 
-        if (board != null && "0".equals(board.getPostState())) {
+        if (board != null && "1".equals(board.getPostState())) {
             queryResult = boardMapper.deleteBoard(postNumber);
         }
 

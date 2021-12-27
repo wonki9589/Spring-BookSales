@@ -8,7 +8,7 @@
 
 <th:block layout:fragment="content">
 	<div style="text-align:center;"class="card-content">
-		<form style="display:inline-block; width:50%;"class="form-horizontal" th:action="@{/board/register.do}"
+		<form style="display:inline-block; width:50%; background-color: rgba(255, 255, 255, 0.7); margin-top:2em;"class="form-horizontal" th:action="@{/board/register.do}"
 			th:object="${board}" method="post"
 			onsubmit="return registerBoard(this)">
 			
@@ -27,9 +27,9 @@
 			</div>
 
 			<div class="form-group">
-				<label for="postContents" class="col-sm-2 control-label">내용</label>
+				<label  for="postContents" class="col-sm-2 control-label">내용</label>
 				<div class="col-sm-10">
-					<textarea th:field="*{postContents}" class="form-control"
+					<textarea style="height:50vh;" th:field="*{postContents}" class="form-control"
 						placeholder="내용을 입력해 주세요."></textarea>
 				</div>
 			</div>

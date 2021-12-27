@@ -23,6 +23,12 @@ public class BoardController extends UiUtils {
 
     @Autowired
     private BoardService boardService;
+    
+    @GetMapping(value = "/board/home.do") //메인페이지 홈
+    public String openMemberJoin(Model model) {
+
+        return "board/home";
+    }
 
     @GetMapping(value = "/board/write.do")
     public String openBoardWrite(@ModelAttribute("params") BoardDTO params, @RequestParam(value = "postNumber", required = false) Long postNumber, Model model) {
@@ -30,7 +36,7 @@ public class BoardController extends UiUtils {
             model.addAttribute("board", new BoardDTO());
         } else {
             BoardDTO board = boardService.getBoardDetail(postNumber);
-            if (board == null || "1".equals(board.getPostState())) {
+            if (board == null) {
                 return showMessageWithRedirect("없는 게시글이거나 이미 삭제된 게시글입니다.", "/board/list.do", Method.GET, null, model);
             }
             model.addAttribute("board", board);
@@ -75,7 +81,7 @@ public class BoardController extends UiUtils {
         }
 
         BoardDTO board = boardService.getBoardDetail(postNumber);
-        if (board == null || "1".equals(board.getPostState())) {
+        if (board == null || "0".equals(board.getPostState())) {
             return showMessageWithRedirect("없는 게시글이거나 이미 삭제된 게시글입니다.", "/board/list.do", Method.GET, null, model);
         }
         model.addAttribute("board", board);
