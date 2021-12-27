@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body th:fragment="main-body">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<div class="container">
+			<a class="navbar-brand" href="#">BookSales</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarResponsive" aria-controls="navbarResponsive"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link" href="#">이달의 추천
+							도서</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">베스트 셀러</a></li>
+					<li class="nav-item"><a class="nav-link" href="/board/list.do">유저
+							커뮤니티</a></li>
+					<li class="nav-item"><a class="nav-link" href="/board/join.do">회원가입</a>
+					</li>
+					<li class="nav-item"><a class="nav-link"
+						href="/board/login.do">로그인</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- /.fixed-navbar -->
+	<th:block layout:fragment="search"></th:block>
+
+
+	<!-- //.clearfix -->
+
+	<th:block layout:fragment="content"></th:block>
+
+	<th:block layout:fragment="paging"></th:block>
+	</div>
+	<!-- /.box-content -->
+
+	<th:block layout:fragment="add-content"></th:block>
+
+	</div>
+	<!-- /.col-xs-12 -->
+	</div>
+	<!-- /.row row-inline-block small-spacing -->
+	<footer style="bottom: 0%; width: 100%; position: fixed;"
+		class="py-5 bg-dark">
+		<div class="container">
+			<p class="m-0 text-center text-white">Copyright &copy; Your
+				Website 2019</p>
+		</div>
+		<!-- /.container -->
+	</footer>
+	</div>
+	<!-- /.main-content -->
+	</div>
+	<!-- /#wrapper -->
+
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/custom.js"></script>
+	<script th:src="@{/scripts/jquery.min.js}"></script>
+	<script th:src="@{/plugin/bootstrap/js/bootstrap.min.js}"></script>
+	<script
+		th:src="@{/plugin/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js}"></script>
+
+	<script th:src="@{/scripts/main.js}"></script>
+	<script th:src="@{/scripts/common.js}"></script>
+
+	<th:block layout:fragment="script"></th:block>
+</body>
+</html>

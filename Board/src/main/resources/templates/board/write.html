@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="board/layout/basic">
+<th:block layout:fragment="title">
+	<title>this The page is a write page</title>
+</th:block>
+
+<th:block layout:fragment="content">
+	<div style="text-align:center;"class="card-content">
+		<form style="display:inline-block; width:50%;"class="form-horizontal" th:action="@{/board/register.do}"
+			th:object="${board}" method="post"
+			onsubmit="return registerBoard(this)">
+			
+			<!--/* update의 경우 서버로 전달할 게시글 번호 (PK) */-->
+			<input type="hidden" th:if="*{postNumber != null and postNumber > 0}"
+				th:field="*{postNumber}" />
+            
+
+
+			<div style="margin-top:1em;"class="form-group">
+				<label for="title" class="col-sm-2 control-label">제목</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{postTitle}" class="form-control"
+						placeholder="제목을 입력해 주세요." />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="postContents" class="col-sm-2 control-label">내용</label>
+				<div class="col-sm-10">
+					<textarea th:field="*{postContents}" class="form-control"
+						placeholder="내용을 입력해 주세요."></textarea>
+				</div>
+			</div>
+
+			<div style="margin-bottom:1em;"class="btn_wrap text-center">
+				<a th:href="|@{/board/list.do}*{makeQueryString(currentPageNo)}|"
+					class="btn btn-primary waves-effect waves-light">뒤로가기</a>
+				<button type="submit"
+					class="btn btn-primary waves-effect waves-light">저장하기</button>
+			</div>
+		</form>
+	</div>
+	<!-- /.card-content -->
+</th:block>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+
+		function registerBoard(form) {
+
+			
+			var result = (isValid(form.title, "제목", null, null)
+					&& isValid(form.writer, "이름", null, null) && isValid(
+					form.content, "내용", null, null));
+
+			if (result == false) {
+				return false;
+			}
+
+			var postNumber = /*[[ ${board.postNumber} ]]*/null;
+			if (isEmpty(postNumber) == false) {
+				var queryString = /*[[ ${params.makeQueryString(params.currentPageNo)} ]]*/null;
+
+				/*[- 쿼리 스트링을 오브젝트 형태로 변환 -]*/
+				queryString = new URLSearchParams(queryString);
+				queryString
+						.forEach(function(value, key) {
+							if (isEmpty(value) == false) {
+								$(form)
+										.append(
+												'<input type="hidden" name="' + key + '" value="' + value + '" />');
+							}
+						});
+			}
+		}
+		/*[- end of function -]*/
+
+		/*]]>*/
+	</script>
+</th:block>
+</html>

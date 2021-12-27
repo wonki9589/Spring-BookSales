@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.mapper.BoardMapper">
+
+    <sql id="boardColumns">
+          post_number 
+        , board_number 
+        , post_title 
+        , post_contents 
+        , post_inputdate
+        , post_corrent
+        , post_deletedate 
+        , post_recommend 
+        , post_views 
+        , post_state
+        , user_number
+
+    </sql>
+
+    <insert id="insertBoard" parameterType="BoardDTO">
+        INSERT INTO POST_TB (
+            <include refid="boardColumns" />
+        ) VALUES (
+               #{postNumber }
+            , 2
+            , #{postTitle}
+            , #{postContents}
+            , NOW()
+            , NULL
+            , NULL
+            , 0
+            , 0
+            , 1
+            ,"1"
+        )
+    </insert>
+
+    <select id="selectBoardDetail" parameterType="long" resultType="BoardDTO">
+        SELECT
+            <include refid="boardColumns" />
+        FROM
+            POST_TB
+        WHERE
+            post_state = '1'
+        AND
+            postNumber = #{postNumber}
+    </select>
+
+    <update id="updateBoard" parameterType="BoardDTO">
+        UPDATE POST_TB
+        SET
+             post_number = #{postNumber}
+            
+            , post_title = #{postTitle}  
+            , post_contents = #{postContents} 
+           
+            , post_recommend = #{postRecommend}
+            , post_views = #{postViews}
+            
+
+        WHERE
+            post_number = #{postNumber}
+    </update>
+
+    <update id="deleteBoard" parameterType="long">
+        UPDATE POST_TB
+        SET
+              post_state = '0'
+            , post_deletedate = NOW()
+        WHERE
+            post_number = #{postNumber}
+
+    </update>
+
+        <select id="selectBoardList" parameterType="BoardDTO" resultType="BoardDTO">
+        SELECT
+              post_number as postNumber
+	        , post_title as postTitle
+	        , post_inputdate as postInputdate
+	        , post_views as postViews
+	        , user_number as userNumber
+	        , post_state as postState
+
+        FROM
+            POST_TB
+        WHERE
+            post_state = '1'
+        <include refid="CommonMapper.search" />
+        ORDER BY
+            post_state ASC, 
+            post_number DESC,
+            post_inputdate DESC
+        <include refid="CommonMapper.paging" />
+    </select>
+
+    <select id="selectBoardTotalCount" parameterType="BoardDTO" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            POST_TB
+        WHERE
+            post_state = '1'
+        <include refid="CommonMapper.search" />
+    </select>
+
+</mapper>
